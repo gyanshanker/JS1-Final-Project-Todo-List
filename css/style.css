@@ -1,0 +1,41 @@
+/* UNIVERSALS */
+
+a {
+    text-decoration: none;
+}
+
+h1, h2, h4 {
+    font-family: 'Amiri', serif;
+}
+
+p, a {
+    font-family: 'Roboto', sans-serif;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.block {
+    display: block;
+}
+
+.pull-left {
+    float: left;
+}
+
+.pull-right {
+    float: right;
+}
+
+.clear-float-left {
+    clear: left;
+
+}
+
+/* HEADER section */
+.picture {
+    color: #008175;
+    padding: 10px;
+    margin-top: 10px;
+}
