@@ -7,25 +7,37 @@
     <title>A simple tool to track todo list</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/styles.css" type="text/css">
 </head>
 <body>
-    <div class="main-interface">
-        <header>
-            <a href="#" class="picture pull-left"> G Shanker </a>
+        <!-- An h1 tag with the title of your list.
+        An input for entering ToDo Items with a submit button.
+        An empty ul to hold the ToDo Items. -->
+    <div>
+        <div>
+            <a href="#"> G Shanker </a>
             <h1 class="text-center"> Todo List</h1>
-        </header>
-        <form>
-                <div>
-                  <input type="text" id="uname" name="name"
-                         placeholder="Add a new to-do.."
-                         size="30">
-                </div>
-                <div>
-                  <button>Submit</button>
-                </div>
-              </form>
-
+        </div>
+        <hr>
+        <div>
+            <form id="newTaskEntry">
+                    <div class="form-group">
+                        <label for="newToDoForm">Add a new to-do item</label>
+                        <input type="text" class="form-control" name="newToDo" placeholder="Ex: Buy groceries at Walmart">
+                    </div>
+                    <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+        </div>
+        <hr>
+        <div id="activetasklist">
+            <ul class="list-group" id="activetasklistUL">
+                    <!-- <li class="list-group-item">Cras justo odio</li>
+                    <li class="list-group-item">Dapibus ac facilisis in</li>
+                    <li class="list-group-item">Morbi leo risus</li>
+                    <li class="list-group-item">Porta ac consectetur ac</li>
+                    <li class="list-group-item">Vestibulum at eros</li> -->
+            </ul>
+        </div>
     </div>
     
 
