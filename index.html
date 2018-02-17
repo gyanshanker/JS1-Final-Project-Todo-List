@@ -14,11 +14,10 @@
         An input for entering ToDo Items with a submit button.
         An empty ul to hold the ToDo Items. -->
     <div>
-        <div>
-            <a href="#"> G Shanker </a>
+        <div class="page-header">
+            <a href="#" class="picture pull-left"> G Shanker </a>
             <h1 class="text-center"> Todo List</h1>
         </div>
-        <hr>
         <div>
             <form id="newTaskEntry">
                     <div class="form-group">
@@ -30,13 +29,16 @@
         </div>
         <hr>
         <div id="activetasklist">
+            <label>Currently Active Todo List</label>
             <ul class="list-group" id="activetasklistUL">
-                    <!-- <li class="list-group-item">Cras justo odio</li>
-                    <li class="list-group-item">Dapibus ac facilisis in</li>
-                    <li class="list-group-item">Morbi leo risus</li>
-                    <li class="list-group-item">Porta ac consectetur ac</li>
-                    <li class="list-group-item">Vestibulum at eros</li> -->
+                    <!-- <li class="list-group-item"><input type="checkbox" aria-label="..." name="checked"> Cras justo odio</li> -->
             </ul>
+        </div>
+        <div id="actionbuttons">
+            <label>What do your want to do?</label>
+            <button class="btn btn-default" type="submit" id="editbutton">Edit</button>
+            <button class="btn btn-default" type="submit" id="completebutton">Complete</button>
+            <button class="btn btn-default" type="submit" id="deletebutton">Delete</button>
         </div>
     </div>
     
