@@ -33,6 +33,10 @@ p, a {
 
 }
 
+.line {
+    text-decoration: line-through;
+  }
+
 /* HEADER section */
 .picture {
     color: #008175;

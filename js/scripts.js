@@ -1,112 +1,153 @@
-// Get the input and the ul using DOM access and store them in variables.
-// When the submit button is clicked get the user input and add it to an array.
-
+//GLOBAL Variables
 var taskListActive = []; //list of active tasks 
-var taskListComp = []; //list of completed tasks
+var newTaskEntry = document.querySelector('#newTaskEntry');
+var editRequest = document.querySelector('#editbutton');
+var completeRequest = document.querySelector('#completebutton');
+var deleteRequest = document.querySelector('#deletebutton');
+var displayActiveDiv = document.querySelector('#activetasklist');
+var taskBeingCompleted;
+var taskBeingEdited;
+var taskBeingDeleted;
 
 //Task is constructor function for a task in the lists todoList
 function Task(x) {   
     this.task = x;
-    this.dateCreated = Date.now();
+    this.dateCreated = Date.now(); 
     this.completed = false;
 }
 
-//function addToActiveTaskList creates and adds a new task into active tasks list and update 
+//function addToActiveTaskList creates and adds a new task to active-tasks-list or 
+//adds and edited tassk on list
 function addToActiveTaskList(x) {
     if (x !== "") {
-        var newTask = new Task(x);
-        taskListActive.push(newTask);
+        if (taskBeingEdited == null) {
+            let newTask = new Task(x);
+            taskListActive.push(newTask);
+        } else {
+            taskBeingEdited.task = x;
+            taskListActive.push(taskBeingEdited);
+        } 
     }
-    //console.log(taskListActive);
 }
 
-var displayActiveDiv = document.querySelector('#activetasklist');
-//function updateActiveTaskDisplayupdats list of active tasks as dislayed on screen
+//function updateActiveTaskDisplay deletes current list and creates a new list on screen
 function updateActiveTaskDisplay() {
-    //console.log(taskListActive);
     let oldUL = document.querySelector('#activetasklistUL');
-    //console.log(oldUL);
     oldUL.remove();
     let ul = document.createElement('ul');
     ul.className = "list-group";
     ul.id = "activetasklistUL";
     displayActiveDiv.appendChild(ul);
     for (i = 0; i < taskListActive.length; i++ ) {
-
         let li = document.createElement('li');
-        //li.textContent = taskListActive[i].task;
-        li.className = "list-group-item";
-        li.innerHTML = '<input type="checkbox" aria-label="..." name="checked"> ' + taskListActive[i].task;
-        //console.log(li);
+        li.className = "list-group-item";   
+        if (taskListActive[i].completed) {
+            li.classList.add("line");
+            li.innerHTML = '<input type="checkbox" aria-label="..." name="mycheckedbox" disabled="true"> ' + taskListActive[i].task;
+        } else {
+            li.innerHTML = '<input type="checkbox" aria-label="..." name="mycheckedbox"> ' + taskListActive[i].task;
+        }
         ul.appendChild(li);
     }
 }
 
-//     var checkboxes = document.querySelectorAll('input[type=checkbox]');
-
-//     for(var i = 0; i < checkboxes.length; i++) {
-//         checkboxes[i].addEventListener('change', function(e){
-//             if (e.srcElement.checked === true) {
-//                 console.log("Task Checked for action");
-//             } 
-//             // console.log(e);
-//             // console.log(e.target.type);
-//             // console.log(e.srcElement.checked);
-
-//             //console.log(taskListActive[i].task);
-//         });
-//     }
-// }
-
-var newTaskEntry = document.querySelector('#newTaskEntry');
-
+//Event triggered when a new task is entered
 newTaskEntry.addEventListener('submit', function(e) {
     addToActiveTaskList(newTaskEntry.newToDo.value); //create a new task and add to active task list
+    newTaskEntry.newToDo.value = "";
     updateActiveTaskDisplay();
     e.preventDefault();
 })
 
-var editRequest = document.querySelector('#editbutton');
-
+//Event triggered when user wants edit a task
 editRequest.addEventListener('click', function(e) {
-    console.log('edit request');
-    console.log(e);
+    editTasks();
     e.preventDefault();
 })
 
-var completeRequest = document.querySelector('#completebutton');
+//function to edit todo item
+function editTasks() {
+    var checkedBoxes = document.querySelectorAll('input[name=mycheckedbox]');
+    taskBeingEdited = null;
+
+    if (taskListActive.length === 0) {
+        alert('No active task');
+        return;
+    }
+
+    for (let i = 0; i < checkedBoxes.length; i++) {
+        if (checkedBoxes[i].checked) {
+            newTaskEntry.newToDo.value = taskListActive[i].task;
+            let temp = taskListActive.splice(i, 1);
+            taskBeingEdited = temp[0];
+            updateActiveTaskDisplay();
+            return;
+        }
+    }
+    alert("No task checked to edit"); 
+}
+
+//Event triggered when a user wants to mark a task completed
 
 completeRequest.addEventListener('click', function(e) {
-    console.log('complete request');
-    console.log(e);
+    completeTask();
     e.preventDefault();
 })
 
-var deleteRequest = document.querySelector('#deletebutton');
+function completeTask() {
+    var checkedBoxes = document.querySelectorAll('input[name=mycheckedbox]');
+    taskBeingCompleted = null;
 
+    if (taskListActive.length === 0) {
+        alert('No active task');
+        return;
+    }
+ 
+    for (let i = 0; i < checkedBoxes.length; i++) {
+        if (checkedBoxes[i].checked) {
+            let temp = taskListActive.splice(i,1);
+            taskBeingCompleted = temp[0];
+            taskBeingCompleted.completed = true;
+            taskListActive.push(taskBeingCompleted);
+            updateActiveTaskDisplay();
+            return;
+        }
+    }
+    alert('No task checked to mark completed');
+}
+
+//Event triggered whe a user wants to delete a task
 deleteRequest.addEventListener('click', function(e) {
-    console.log('delete request');
-    console.log(e);
+    deleteTask();
     e.preventDefault();
 })
 
-// get all the checkboxes on the page
-//var checkboxes = document.querySelectorAll('input[type=checkbox]');
+//function to delete a task 
 
-// add a change event listener
-// for(var i = 0; i < checkboxes.length; i++) {
-//     checkboxes[i].addEventListener('change', function(){
-//         console.log('the checkbox changed');
-//     });
-// }
+function deleteTask() {
+    var checkedBoxes = document.querySelectorAll('input[name=mycheckedbox]');
+    taskBeingDeleted = null;
 
+    if (taskListActive.length === 0) {
+        alert('No active task');
+        return;
+    }
 
-// document.querySelector("#activetasklist").addEventListener('click', function(e) {
-//     if (e.target.type === 'checkbox') {
-//         console.log(e);
+    for (let i = 0; i < checkedBoxes.length; i++) {
+        if (checkedBoxes[i].checked) {
+            if (confirm('Do you really want to delete the todo item?')) {
+                let temp = taskListActive.splice(i, 1);
+                taskBeingDeleted = temp[0];
+                updateActiveTaskDisplay();
+                return;
+            } else {
+                return;
+            }
 
-
-// })
+        }
+    }
+    alert('No task checked to delete');
+}
 
 
 
