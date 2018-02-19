@@ -20,13 +20,13 @@ p, a {
     display: block;
 }
 
-.pull-left {
+/* .pull-left {
     float: left;
 }
 
 .pull-right {
     float: right;
-}
+} */
 
 .clear-float-left {
     clear: left;
