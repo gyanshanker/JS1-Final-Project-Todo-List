@@ -1,5 +1,7 @@
-/* UNIVERSALS */
+/* Fonts for project */
+@import url('https://fonts.googleapis.com/css?family=Amiri|Raleway');
 
+/* UNIVERSALS */
 a {
     text-decoration: none;
 }
@@ -9,7 +11,11 @@ h1, h2, h4 {
 }
 
 p, a {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Raleway', sans-serif;
+}
+
+input, li, button, label {
+    font-family: 'Raleway', sans-serif;
 }
 
 .text-center {
@@ -57,6 +63,15 @@ font-weight: 700;
 background-color: #F8512F;
 }
 
+/* BODY */
+#spacexlaunch {
+    background-image: url('../img/spacex-549326-unsplash.jpg');
+    background-attachment: fixed;
+    background-position: top;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
 /* HEADER section */
 .picture {
     padding: 2px; 
@@ -77,10 +92,6 @@ background-color: #F8512F;
     margin-top: -5px;
 }
 
-/* .nav-container h1 {
-    margin-bottom: 0;
-} */
-
 .nav-items {
     margin: 0;
     text-align: right;
@@ -89,11 +100,3 @@ background-color: #F8512F;
 .nav-items .listed-nav-item {
     display: inline;
 }
-
-#spacexlaunch {
-    background-image: url('../img/spacex-549326-unsplash.jpg');
-    background-attachment: fixed;
-    background-position: top;
-    background-repeat: no-repeat;
-    background-size: cover;
-  }
