@@ -9,39 +9,40 @@
     <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
     <link rel="stylesheet" href="css/styles.css" type="text/css">
 </head>
-<body>
-        <!-- An h1 tag with the title of your list.
-        An input for entering ToDo Items with a submit button.
-        An empty ul to hold the ToDo Items. -->
-    <div>
-        <div class="page-header">
-            <a href="#" class="picture pull-left"> G Shanker </a>
-            <h1 class="text-center"> My To Do List</h1>
+<body id="spacexlaunch">
+    <div id="pagealignment">
+        <div class="page-header header-container">
+            <img src="../img/Gyan12.jpg" class="picture pull-left" alt="G. Shanker">
+            <h4 class="white-text pull-left" style="margin-left:5px;">Gyan</h4>
+            <h1 class="text-center white-text">My Todo List</h1>
+            <!-- <h4 class="white-text pull-right" style="margin-top:-20px">Where there is a will, there is a way</h4> -->
         </div>
         <div class="center-block">
-            <form id="newTaskEntry">
-                    <div class="form-group">
-                        <label for="newToDoForm">ToDo...</label>
-                        <input type="text" class="form-control" name="newToDo" placeholder="Ex: Buy groceries at Walmart">
-                    </div>
-                    <button type="submit" class="btn btn-default">Submit</button>
-            </form>
+            <div id="actionbuttons" class="pull-right nav-items">
+                    <!-- <label>What's do you want to do?</label> -->
+                    <button class="btn btn-default listed-nav-item thick-text" type="submit" id="addbutton">Add</button>
+                    <button class="btn btn-default listed-nav-item thick-text" type="submit" id="editbutton">Edit</button>
+                    <button class="btn btn-default listed-nav-item thick-text" type="submit" id="completebutton">Complete</button>
+                    <button class="btn btn-default listed-nav-item thick-text" type="submit" id="deletebutton">Delete</button>
+            </div>
+            <div class="clear-float-right">
+                <form id="newTaskEntry">
+                        <div class="form-group">
+                            <label for="newToDoForm" class="white-text thick-text">To Do...</label>
+                            <input type="text" class="form-control thick-text" name="newToDo" placeholder="Ex: Buy groceries at Walmart">
+                        </div>
+                        <button type="submit" class="btn btn-default thick-text">Submit</button>
+                </form>
+            </div>
         </div>
-        <hr>
+        <br>
         <div class="center-block" id="activetasklist">
-            <label>To Do List...</label>
+            <label class="white-text thick-text">To Do List...</label>
             <!-- <ul class="list-group" id="activetasklistUL"> -->
-            <ul id="activetasklistUL">
-                    <li>No ACTIVE To Dos</li>
-                    <li>No COMPLETED To Dos</li>
+            <ul id="activetasklistUL" class="white-text thick-text">
+                    <li>No ACTIVE Todos</li>
+                    <li>No COMPLETED Todos</li>
             </ul>
-        </div>
-        <div id="actionbuttons">
-            <label>What's do you want to do?</label>
-            <button class="btn btn-default" type="submit" id="addbutton">Add a new ToDo</button>
-            <button class="btn btn-default" type="submit" id="editbutton">Edit a ToDo</button>
-            <button class="btn btn-default" type="submit" id="completebutton">Mark a ToDo Complete</button>
-            <button class="btn btn-default" type="submit" id="deletebutton">Delete a ToDo</button>
         </div>
     </div>
     

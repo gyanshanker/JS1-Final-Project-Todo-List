@@ -15,6 +15,7 @@ function Task(task) {
     this.task = task;
     this.dateCreated = Date.now(); 
     this.completed = false;
+    this.urgent = false;
 }
 
 //function addToActiveTaskList creates and adds a new task to active-tasks-list or 
@@ -30,7 +31,7 @@ function addToActiveTaskList(task) {
             taskBeingEdited = null;
         } 
     } else {
-        alert('Enter task please!');
+        alert('Enter the task please!');
     }
     return;
 }
@@ -41,14 +42,16 @@ function updateActiveTaskDisplay() {
     oldUL.remove();
     let ul = document.createElement('ul');
     ul.id = "activetasklistUL";
+    ul.className = "white-text thick-text";
+    
     var li;
     //if there are no to dos in active or completed state, ..
     if (taskListActive.length == 0 && taskListCompleted.length == 0) {
         li = document.createElement('li');
-        li.textContent = "No ACTIVE To Dos";
+        li.textContent = "No ACTIVE Todos";
         ul.appendChild(li);
         li = document.createElement('li');
-        li.textContent = "No COMPLETED To Dos";
+        li.textContent = "No COMPLETED Todos";
         ul.appendChild(li);
         displayActiveDiv.appendChild(ul);
         return;
@@ -60,7 +63,7 @@ function updateActiveTaskDisplay() {
     //add currently active tasks in list
     for (i = 0; i < taskListActive.length; i++ ) {
         li = document.createElement('li');
-        li.className = "list-group-item";   
+        li.className = "list-group-item thick-text";   
         li.innerHTML = '<input type="checkbox" aria-label="..." name="mycheckedbox"> ' + taskListActive[i].task;
         ul.appendChild(li);
     }
@@ -68,7 +71,7 @@ function updateActiveTaskDisplay() {
     //add completed tasks in list if any
     for (i = 0; i < taskListCompleted.length; i++ ) {
         li = document.createElement('li');
-        li.className = "list-group-item";   
+        li.className = "list-group-item thick-text gray-text";   
         li.classList.add("line");
         li.innerHTML = '<input type="checkbox" aria-label="..." name="mycheckedbox" disabled="true"> ' + taskListCompleted[i].task;
         ul.appendChild(li);

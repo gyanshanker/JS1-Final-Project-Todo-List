@@ -20,26 +20,80 @@ p, a {
     display: block;
 }
 
-/* .pull-left {
-    float: left;
-}
-
-.pull-right {
-    float: right;
-} */
-
 .clear-float-left {
     clear: left;
 
+}
+
+.clear-float-right {
+    clear: right;
 }
 
 .line {
     text-decoration: line-through;
   }
 
+.white-text {
+    color: #FFFFFF;
+}
+
+.gray-text {
+    color: gray;
+}
+
+.orange-text {
+color: #F8512F;
+}
+
+.thin-text {
+font-weight: 300;
+}
+
+.thick-text {
+font-weight: 700;
+}
+
+.orange-bg {
+background-color: #F8512F;
+}
+
 /* HEADER section */
 .picture {
-    color: #008175;
-    padding: 10px;
-    margin-top: 10px;
+    padding: 2px; 
+    margin-top: -1em;
+    height: 5em;
+    width: 4em;
+    resize: both;
 }
+
+#pagealignment {
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.header-container {
+    border-bottom: 3px solid #00aea1; /*teal*/
+    font-weight: 400;
+    margin-top: -5px;
+}
+
+/* .nav-container h1 {
+    margin-bottom: 0;
+} */
+
+.nav-items {
+    margin: 0;
+    text-align: right;
+}
+
+.nav-items .listed-nav-item {
+    display: inline;
+}
+
+#spacexlaunch {
+    background-image: url('../img/spacex-549326-unsplash.jpg');
+    background-attachment: fixed;
+    background-position: top;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
