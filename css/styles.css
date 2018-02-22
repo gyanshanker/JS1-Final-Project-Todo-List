@@ -67,6 +67,15 @@ font-weight: bold;
 background-color: #F8512F;
 }
 
+/* BODY */
+#spacexlaunch {
+    background-image: url('../img/spacex-549326-unsplash.jpg');
+    background-attachment: fixed;
+    background-position: top;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
 /* HEADER section */
 .picture {
     padding: 2px; 
@@ -86,10 +95,6 @@ background-color: #F8512F;
     font-weight: 400;
     margin-top: -5px;
 }
-
-/* .nav-container h1 {
-    margin-bottom: 0;
-} */
 
 .nav-items {
     margin: 0;
