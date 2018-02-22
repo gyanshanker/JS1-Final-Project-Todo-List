@@ -123,7 +123,6 @@ function editTasks() {
         alert('To Do List is empty');
         return;
     }
-
     for (let i = 0; i < checkedBoxes.length; i++) {
         if (checkedBoxes[i].checked) {
             newTaskEntry.newToDo.value = taskListActive[i].task;
@@ -151,20 +150,29 @@ function completeTask() {
         alert('No active task');
         return;
     }
- 
+    //remove checked tasks from active tasks list and add to completed task list
+    let atleastOneCheckedBox = false;
+    let j = 0;
     for (let i = 0; i < checkedBoxes.length; i++) {
         if (checkedBoxes[i].checked) {
-            let temp = taskListActive.splice(i,1);
+            atleastOneCheckedBox = true;
+            let temp = taskListActive.splice(j,1);
             localStorage.setItem("activeTasks", JSON.stringify(taskListActive));
             taskBeingCompleted = temp[0];
             taskBeingCompleted.completed = true;
             taskListCompleted.push(taskBeingCompleted);
-            localStorage.setItem("completedTasks", JSON.stringify(taskListCompleted));
-            updateActiveTaskDisplay();
-            return;
+        } else {
+            j++;
         }
     }
-    alert('No To Do checked to mark completed');
+    //sync completed task with local storage and update screen; if no checked tasks, alert user
+    if (atleastOneCheckedBox) {
+        localStorage.setItem("completedTasks", JSON.stringify(taskListCompleted));
+        updateActiveTaskDisplay(); 
+    } else {
+        alert('No To Do checked to mark completed');
+    }
+    return;
 }
 
 //Event triggered whe a user wants to delete a task
@@ -182,24 +190,31 @@ function deleteTask() {
         alert('No active task');
         return;
     }
-
+    //remove checked tasks from active tasks list and add to deleted task list
+    let atleastOneCheckedBox = false;
+    let j = 0;
     for (let i = 0; i < checkedBoxes.length; i++) {
         if (checkedBoxes[i].checked) {
-            if (confirm('Do you really want to delete the To Do - ' + taskListActive[i].task + '?')) {
-                let temp = taskListActive.splice(i, 1);
+            if (confirm('Do you really want to DELETE the To Do - ' + taskListActive[j].task + '?')) {
+                atleastOneCheckedBox = true;
+                let temp = taskListActive.splice(j, 1);
                 localStorage.setItem("activeTasks", JSON.stringify(taskListActive));
                 taskBeingDeleted = temp[0];
                 taskListDeleted.push(taskBeingDeleted);
-                localStorage.setItem("deletedTasks", JSON.stringify(taskListDeleted));
-                updateActiveTaskDisplay();
-                return;
             } else {
-                return;
+                j++;
             }
 
         }
     }
-    alert('No To Do checked to delete');
+    //sync completed task with local storage and update screen; if no checked tasks, alert user
+    if (atleastOneCheckedBox) {
+        localStorage.setItem("deletedTasks", JSON.stringify(taskListDeleted));
+        updateActiveTaskDisplay(); 
+    } else {
+        alert('No To Do to delete');
+    }
+    return;
 }
 
 //Event triggered whe a user wants to empty all tasks or resets task lists
