@@ -10,6 +10,8 @@ var deleteRequest = document.querySelector('#deletebutton');
 var displayActiveDiv = document.querySelector('#activetasklist');
 var taskBeingEdited = null;
 
+
+
 //Task is constructor function for a task in the lists todoList
 function Task(task) {   
     this.task = task;
@@ -25,10 +27,12 @@ function addToActiveTaskList(task) {
         if (taskBeingEdited === null) {
             let newTask = new Task(task);
             taskListActive.push(newTask);
+            localStorage.setItem("activeTasks", JSON.stringify(taskListActive));
         } else {
             taskBeingEdited.task = task;
             taskListActive.push(taskBeingEdited);
             taskBeingEdited = null;
+            localStorage.setItem("activeTasks", JSON.stringify(taskListActive));
         } 
     } else {
         alert('Enter the task please!');
@@ -125,6 +129,7 @@ function editTasks() {
         if (checkedBoxes[i].checked) {
             newTaskEntry.newToDo.value = taskListActive[i].task;
             let temp = taskListActive.splice(i, 1);
+            localStorage.setItem("activeTasks", JSON.stringify(taskListActive));
             taskBeingEdited = temp[0];
             updateActiveTaskDisplay();
             return;
@@ -152,9 +157,11 @@ function completeTask() {
     for (let i = 0; i < checkedBoxes.length; i++) {
         if (checkedBoxes[i].checked) {
             let temp = taskListActive.splice(i,1);
+            localStorage.setItem("activeTasks", JSON.stringify(taskListActive));
             taskBeingCompleted = temp[0];
             taskBeingCompleted.completed = true;
             taskListCompleted.push(taskBeingCompleted);
+            localStorage.setItem("completedTasks", JSON.stringify(taskListCompleted));
             updateActiveTaskDisplay();
             return;
         }
@@ -183,8 +190,10 @@ function deleteTask() {
         if (checkedBoxes[i].checked) {
             if (confirm('Do you really want to delete the To Do - ' + taskListActive[i].task + '?')) {
                 let temp = taskListActive.splice(i, 1);
+                localStorage.setItem("activeTasks", JSON.stringify(taskListActive));
                 taskBeingDeleted = temp[0];
                 taskListDeleted.push(taskBeingDeleted);
+                localStorage.setItem("deletedTasks", JSON.stringify(taskListDeleted));
                 updateActiveTaskDisplay();
                 return;
             } else {
@@ -194,6 +203,23 @@ function deleteTask() {
         }
     }
     alert('No To Do checked to delete');
+}
+
+//initialize global lists from local storage if they exist
+//if lists exist, display them
+
+// console.log(JSON.parse(localStorage.getItem(activeTasks)));
+// console.log(JSON.parse(localStorage(completedTasks)));
+
+if (localStorage.getItem("completedTasks") !== null) {
+    taskListCompleted = JSON.parse(localStorage.getItem("completedTasks"));
+}
+if (localStorage.getItem("deletedTasks") !== null) {
+    taskListDeleted = JSON.parse(localStorage.getItem("deletedTasks"));
+}
+if (localStorage.getItem("activeTasks") !== null) {
+    taskListActive = JSON.parse(localStorage.getItem("activeTasks"));
+    updateActiveTaskDisplay();
 }
 
 
