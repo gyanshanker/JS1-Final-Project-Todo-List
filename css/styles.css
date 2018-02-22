@@ -47,16 +47,20 @@ input, li, button, label {
     color: gray;
 }
 
+.black-text {
+    color: black;
+}
+
 .orange-text {
 color: #F8512F;
 }
 
 .thin-text {
-font-weight: 300;
+font-weight: normal;
 }
 
 .thick-text {
-font-weight: 700;
+font-weight: bold;
 }
 
 .orange-bg {
@@ -99,4 +103,33 @@ background-color: #F8512F;
 
 .nav-items .listed-nav-item {
     display: inline;
+}
+
+#spacexlaunch {
+    background-image: url('../img/jordan-steranka-527412-unsplash.jpg');
+    background-attachment: fixed;
+    background-position: top;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+footer {
+    height: 20px;
+    background-color: rgba(100, 98, 98, 0.589); /* charcol gray */
+    color: #fff;
+    clear: both;
+    font-size: 10px;
+    margin-top: 10px;
+}
+
+.social-media a{
+    color: #fff;
+}
+
+.social-media a:hover {
+    color: #aff300;
+}
+
+.social-media i {
+    margin: 10px 12px;
 }

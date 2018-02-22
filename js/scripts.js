@@ -7,6 +7,7 @@ var addRequest = document.querySelector('#addbutton');
 var editRequest = document.querySelector('#editbutton');
 var completeRequest = document.querySelector('#completebutton');
 var deleteRequest = document.querySelector('#deletebutton');
+var resetRequest = document.querySelector('#resetbutton');
 var displayActiveDiv = document.querySelector('#activetasklist');
 var taskBeingEdited = null;
 
@@ -25,10 +26,12 @@ function addToActiveTaskList(task) {
         if (taskBeingEdited === null) {
             let newTask = new Task(task);
             taskListActive.push(newTask);
+            localStorage.setItem("activeTasks", JSON.stringify(taskListActive));
         } else {
             taskBeingEdited.task = task;
             taskListActive.push(taskBeingEdited);
             taskBeingEdited = null;
+            localStorage.setItem("activeTasks", JSON.stringify(taskListActive));
         } 
     } else {
         alert('Enter the task please!');
@@ -48,10 +51,10 @@ function updateActiveTaskDisplay() {
     //if there are no to dos in active or completed state, ..
     if (taskListActive.length == 0 && taskListCompleted.length == 0) {
         li = document.createElement('li');
-        li.textContent = "No ACTIVE Todos";
+        li.textContent = "No ACTIVE To dos";
         ul.appendChild(li);
         li = document.createElement('li');
-        li.textContent = "No COMPLETED Todos";
+        li.textContent = "No COMPLETED To dos";
         ul.appendChild(li);
         displayActiveDiv.appendChild(ul);
         return;
@@ -125,6 +128,7 @@ function editTasks() {
         if (checkedBoxes[i].checked) {
             newTaskEntry.newToDo.value = taskListActive[i].task;
             let temp = taskListActive.splice(i, 1);
+            localStorage.setItem("activeTasks", JSON.stringify(taskListActive));
             taskBeingEdited = temp[0];
             updateActiveTaskDisplay();
             return;
@@ -134,7 +138,6 @@ function editTasks() {
 }
 
 //Event triggered when a user wants to mark a task completed
-
 completeRequest.addEventListener('click', function(e) {
     completeTask();
     e.preventDefault();
@@ -152,9 +155,11 @@ function completeTask() {
     for (let i = 0; i < checkedBoxes.length; i++) {
         if (checkedBoxes[i].checked) {
             let temp = taskListActive.splice(i,1);
+            localStorage.setItem("activeTasks", JSON.stringify(taskListActive));
             taskBeingCompleted = temp[0];
             taskBeingCompleted.completed = true;
             taskListCompleted.push(taskBeingCompleted);
+            localStorage.setItem("completedTasks", JSON.stringify(taskListCompleted));
             updateActiveTaskDisplay();
             return;
         }
@@ -169,7 +174,6 @@ deleteRequest.addEventListener('click', function(e) {
 })
 
 //function to delete a task 
-
 function deleteTask() {
     var checkedBoxes = document.querySelectorAll('input[name=mycheckedbox]');
     var taskBeingDeleted = null;
@@ -183,8 +187,10 @@ function deleteTask() {
         if (checkedBoxes[i].checked) {
             if (confirm('Do you really want to delete the To Do - ' + taskListActive[i].task + '?')) {
                 let temp = taskListActive.splice(i, 1);
+                localStorage.setItem("activeTasks", JSON.stringify(taskListActive));
                 taskBeingDeleted = temp[0];
                 taskListDeleted.push(taskBeingDeleted);
+                localStorage.setItem("deletedTasks", JSON.stringify(taskListDeleted));
                 updateActiveTaskDisplay();
                 return;
             } else {
@@ -195,6 +201,40 @@ function deleteTask() {
     }
     alert('No To Do checked to delete');
 }
+
+//Event triggered whe a user wants to empty all tasks or resets task lists
+resetRequest.addEventListener('click', function(e) {
+    resetTask();
+    e.preventDefault();
+})
+
+//function to delete a task 
+function resetTask() {
+    if (confirm('Do you really want to RESET the ToDo list?')) {
+        //clear local storage, reset variables and reset screen
+        localStorage.clear(); 
+        taskListActive.length = 0;  
+        taskListCompleted.length = 0;
+        taskListDeleted.length = 0;
+        taskBeingEdited = null;
+        updateActiveTaskDisplay();
+    }
+    return;
+}
+
+//initialize global lists from local storage if they exist
+//if lists exist, display them
+if (localStorage.getItem("completedTasks") !== null) {
+    taskListCompleted = JSON.parse(localStorage.getItem("completedTasks"));
+}
+if (localStorage.getItem("deletedTasks") !== null) {
+    taskListDeleted = JSON.parse(localStorage.getItem("deletedTasks"));
+}
+if (localStorage.getItem("activeTasks") !== null) {
+    taskListActive = JSON.parse(localStorage.getItem("activeTasks"));
+    updateActiveTaskDisplay();
+}
+
 
 
 
