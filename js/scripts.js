@@ -5,6 +5,7 @@ var taskListDeleted = []; //global list of deleted tasks
 var newTaskEntry = document.querySelector('#newTaskEntry');
 var addRequest = document.querySelector('#addbutton');
 var editRequest = document.querySelector('#editbutton');
+var sortRequest = document.querySelector('#sortbutton');
 var completeRequest = document.querySelector('#completebutton');
 var deleteRequest = document.querySelector('#deletebutton');
 var resetRequest = document.querySelector('#resetbutton');
@@ -18,7 +19,7 @@ function Task(task) {
     this.completed = false;
     this.urgent = false;
 }
-
+//========================================================================================
 //function addToActiveTaskList creates and adds a new task to active-tasks-list or 
 //adds and edited tassk on list
 function addToActiveTaskList(task) {
@@ -38,7 +39,7 @@ function addToActiveTaskList(task) {
     }
     return;
 }
-
+//=================================DISPLAY==================================================
 //function updateActiveTaskDisplay deletes current list and creates a new list on screen
 function updateActiveTaskDisplay() {
     let oldUL = document.querySelector('#activetasklistUL');
@@ -81,7 +82,7 @@ function updateActiveTaskDisplay() {
     }
     return;
 }
-
+//===================================SUBMIT=====================================================
 //Event triggered when a new task is entered clicking SUBMIT button
 newTaskEntry.addEventListener('submit', function(e) {
     addToActiveTaskList(newTaskEntry.newToDo.value); //create a new task and add to active task list
@@ -89,7 +90,7 @@ newTaskEntry.addEventListener('submit', function(e) {
     updateActiveTaskDisplay();
     e.preventDefault();
 })
-
+//=======================================ADD=================================================
 //Event triggered when user wants add a task clicking "Add a new ToDo" button
 addRequest.addEventListener('click', function(e) {
     addToActiveTaskList(newTaskEntry.newToDo.value); //create a new task and add to active task list
@@ -97,7 +98,7 @@ addRequest.addEventListener('click', function(e) {
     updateActiveTaskDisplay();
     e.preventDefault();
 })
-
+//=======================================ENTER==================================================
 //Event  triggered when a user hits ENTER key to add a new event
 newTaskEntry.addEventListener('keydown', function (e) {
     //check to see if the enter key was pressed
@@ -108,13 +109,13 @@ newTaskEntry.addEventListener('keydown', function (e) {
         e.preventDefault();
     }
   });
-
+//======================================EDIT===================================================
 //Event triggered when user wants edit a task
 editRequest.addEventListener('click', function(e) {
     editTasks();
     e.preventDefault();
 })
-
+//==========================================================================================
 //function to edit todo item
 function editTasks() {
     var checkedBoxes = document.querySelectorAll('input[name=mycheckedbox]');
@@ -135,7 +136,38 @@ function editTasks() {
     }
     alert("No To Do checked for Edit"); 
 }
+//================================SORT===================================================
+//Event triggered when user wants sort the active task list
+sortRequest.addEventListener('click', function(e) {
+    sortTasks();
+    e.preventDefault();
+})
+//=====================================================================================
+//function to sort the active todo item
+function sortTasks() {
 
+    if (taskListActive.length === 0) {
+        alert('To Do List is empty');
+        return;
+    }
+
+    taskListActive.sort(function(a, b) { //sort teh active task list based on task name
+        var taskA = a.task.toUpperCase(); // ignore upper and lowercase
+        var taskB = b.task.toUpperCase(); // ignore upper and lowercase
+        if (taskA < taskB) {
+            return -1;
+        }
+        if (taskA > taskB) {
+            return 1;
+        }
+        return 0;
+    });
+    //update local storage with sorted task list and update display
+    localStorage.setItem("activeTasks", JSON.stringify(taskListActive));
+    updateActiveTaskDisplay();
+    return;
+}
+//=================================COMPLETE===========================================
 //Event triggered when a user wants to mark a task completed
 completeRequest.addEventListener('click', function(e) {
     completeTask();
@@ -174,7 +206,7 @@ function completeTask() {
     }
     return;
 }
-
+//================================DELETE====================================================
 //Event triggered whe a user wants to delete a task
 deleteRequest.addEventListener('click', function(e) {
     deleteTask();
@@ -201,10 +233,9 @@ function deleteTask() {
                 localStorage.setItem("activeTasks", JSON.stringify(taskListActive));
                 taskBeingDeleted = temp[0];
                 taskListDeleted.push(taskBeingDeleted);
-            } else {
-                j++;
             }
-
+        } else {
+            j++;
         }
     }
     //sync completed task with local storage and update screen; if no checked tasks, alert user
@@ -216,7 +247,7 @@ function deleteTask() {
     }
     return;
 }
-
+//=======================================RESET=============================================
 //Event triggered whe a user wants to empty all tasks or resets task lists
 resetRequest.addEventListener('click', function(e) {
     resetTask();
@@ -236,7 +267,7 @@ function resetTask() {
     }
     return;
 }
-
+//==================================INITIALIZE FROM STORAGE==============================
 //initialize global lists from local storage if they exist
 //if lists exist, display them
 if (localStorage.getItem("completedTasks") !== null) {
