@@ -11,7 +11,9 @@ var deleteRequest = document.querySelector('#deletebutton');
 var resetRequest = document.querySelector('#resetbutton');
 var displayActiveDiv = document.querySelector('#activetasklist');
 var taskBeingEdited = null;
+var userName;
 
+//=========================Object Task=====================================================
 //Task is constructor function for a task in the lists todoList
 function Task(task) {   
     this.task = task;
@@ -19,7 +21,7 @@ function Task(task) {
     this.completed = false;
     this.urgent = false;
 }
-//========================================================================================
+//================================ADD A TASK TO ACTIVE Task List=============================
 //function addToActiveTaskList creates and adds a new task to active-tasks-list or 
 //adds and edited tassk on list
 function addToActiveTaskList(task) {
@@ -39,7 +41,7 @@ function addToActiveTaskList(task) {
     }
     return;
 }
-//=================================DISPLAY==================================================
+//=================================DISPLAY all Tasks- ACTIVE & DELETED=================
 //function updateActiveTaskDisplay deletes current list and creates a new list on screen
 function updateActiveTaskDisplay() {
     let oldUL = document.querySelector('#activetasklistUL');
@@ -254,7 +256,7 @@ resetRequest.addEventListener('click', function(e) {
     e.preventDefault();
 })
 
-//function to delete a task 
+//function to empty all task lists - a reset function!
 function resetTask() {
     if (confirm('Do you really want to RESET the ToDo list?')) {
         //clear local storage, reset variables and reset screen
@@ -263,10 +265,24 @@ function resetTask() {
         taskListCompleted.length = 0;
         taskListDeleted.length = 0;
         taskBeingEdited = null;
+        updateUserName();
         updateActiveTaskDisplay();
     }
     return;
 }
+
+//function to update user name with the info entered by the user or stored in local storage
+function updateUserName() {
+    var h4 = document.querySelector("#username");
+    var uname = localStorage.getItem("user");
+    h4.textContent = "My Name";
+    if (uname === null) {
+        uname = prompt("Welcome to the ToDo List Application. What is your name?");
+        localStorage.setItem("user", uname);
+    }
+    h4.textContent = uname;
+}
+
 //==================================INITIALIZE FROM STORAGE==============================
 //initialize global lists from local storage if they exist
 //if lists exist, display them
@@ -280,6 +296,10 @@ if (localStorage.getItem("activeTasks") !== null) {
     taskListActive = JSON.parse(localStorage.getItem("activeTasks"));
     updateActiveTaskDisplay();
 }
+
+//check if the is new user, if so, ask for user name and story it.
+updateUserName();
+
 
 
 
